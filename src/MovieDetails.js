@@ -55,8 +55,8 @@ export function MovieDetails({
     [selectedId],
   );
   useEffect(function () {
-    function callback() {
-      handleCloseSelectedFilm();
+    function callback(e) {
+      if (e.code === "Escape") handleCloseSelectedFilm();
     }
     document.addEventListener("keydown", callback);
     return function () {
