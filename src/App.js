@@ -18,7 +18,10 @@ export const key = "925ffd4c";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
+  const [watched, setWatched] = useState(function () {
+    const storedWatchedFilms = localStorage.getItem("watched");
+    return storedWatchedFilms ? JSON.parse(storedWatchedFilms) : [];
+  });
   const [load, setLoad] = useState(false);
   const [error, setError] = useState("");
   const [query, setQuery] = useState("");
@@ -36,6 +39,12 @@ export default function App() {
   function handleDelete(id) {
     setWatched(watched.filter((ele) => ele.imdbId !== id));
   }
+  useEffect(
+    function () {
+      localStorage.setItem("watched", JSON.stringify(watched));
+    },
+    [watched],
+  );
   useEffect(
     function () {
       const controller = new AbortController();
